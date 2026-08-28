@@ -207,6 +207,17 @@ VITE_API_BASE=https://YOUR-RENDER-BACKEND-URL/api
 
 ---
 
+## 🔮 Future Improvements
+- Interactive stock charts
+- Real-time market updates
+- Technical indicators
+- Price alerts
+- Portfolio tracking
+- More comprehensive automated testing
+- Scheduled cloud-based ETL jobs
+
+---
+
 ## 👩‍💻 Author
 **[Jhanwi Kumari](https://github.com/Jhanwi)**
 
