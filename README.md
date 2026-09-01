@@ -1,62 +1,118 @@
 # 📊 Stock Sense
 
-> Stock Sense is a full-stack stock market analysis application that allows users to search stocks, view market and historical price data, manage a personal watchlist, and securely access their account.
+> A full-stack stock market application I built to practice **backend development, REST APIs, PostgreSQL, React, TypeScript, and data processing.**
 
-🌐 **Live Demo:** [Stock Sense](https://stock-sense-jade.vercel.app/)
-
-💻 **GitHub:** [Stock Sense Repository](https://github.com/Jhanwi/Stock-Sense)
+🌐 **Live Demo:** https://stock-sense-jade.vercel.app/
 
 ---
 
 ## ✨ Features
 
-- 🔐 **Authentication** — User registration and login with bcrypt password hashing and JWT authentication.
-- 📊 **Dashboard** — View stock information, market overview, search stocks, and see recent activity.
-- 📈 **Historical Data** — View historical stock prices including open, high, low, close, and volume.
-- ⭐ **Watchlist** — Add, view, and remove stocks from a personal watchlist.
-- 🔍 **Stock Analysis** — Search and analyze available stock information through REST APIs.
-- 🌙 **Dark Mode** — Switch between light and dark themes.
-- 📱 **Responsive UI** — Works across desktop, tablet, and mobile screen sizes.
-- 🧪 **Testing** — Backend functionality tested using Vitest.
-- 🐳 **Docker** — Docker configuration included for containerized development.
+* 🔐 **Authentication** — User registration, login, JWT authentication, and password hashing
+* 🔎 **Stock Search** — Search and view stock information
+* 📈 **Price History** — View historical stock prices stored in PostgreSQL
+* ⭐ **Watchlist** — Add, view, and remove stocks from a personal watchlist
+* 📥 **ETL Pipeline** — Collect and process historical data using YFinance and Pandas
+* 🔌 **REST API** — Backend APIs built with Express and TypeScript
+* 🌓 **Responsive UI** — React interface with light and dark mode
+* 🧪 **Testing** — Backend tests using Vitest
+* 🐳 **Docker** — Docker Compose setup for local development
+* ☁️ **Deployment** — Frontend on Vercel and backend on Render
+
+---
+
+## 🖥️ How It Works
+
+The project has three main parts:
+
+```text
+                    ┌─────────────────┐
+                    │  React + Vite   │
+                    │    Frontend     │
+                    └────────┬────────┘
+                             │
+                          REST API
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │ Node + Express  │
+                    │    Backend      │
+                    │   TypeScript    │
+                    └────────┬────────┘
+                             │
+                         PostgreSQL
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │    Database     │
+                    └─────────────────┘
+
+Python ETL
+    │
+    ├── YFinance
+    ├── Pandas
+    └── PostgreSQL
+```
+
+The React frontend communicates with the Express backend through REST APIs.
+
+The backend handles authentication, stock requests, watchlist operations, and database queries.
+
+The Python ETL workflow collects historical stock data using YFinance, processes it with Pandas, and stores it in PostgreSQL.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React.js, TypeScript, Vite, CSS  
-- **Backend:** Node.js, Express.js, TypeScript, REST APIs  
-- **Database:** PostgreSQL  
-- **Authentication:** JWT, bcrypt  
-- **Data Pipeline:** Python, YFinance, Pandas  
-- **Testing:** Vitest  
-- **Tools:** Git, GitHub, Docker, Linux  
-- **Deployment:** Vercel, Render
+### Frontend
+
+* React.js
+* TypeScript
+* Vite
+* CSS
+
+### Backend
+
+* Node.js
+* Express.js
+* TypeScript
+* REST APIs
+
+### Database
+
+* PostgreSQL
+
+### Authentication
+
+* JWT
+* bcrypt
+
+### Data Processing
+
+* Python
+* YFinance
+* Pandas
+
+### Testing & Tools
+
+* Vitest
+* Git
+* GitHub
+* Docker
+* Linux
+
+### Deployment
+
+* Vercel
+* Render
 
 ---
 
-## 🏗️ Architecture
+## 📁 Project Structure
 
 ```text
-React + TypeScript (Frontend)
-            ↓
-      REST API Calls
-            ↓
-Node.js + Express + TypeScript
-            ↓
-       PostgreSQL
-            ↑
- Python ETL + YFinance + Pandas
-
-```
-
----
-
-## 📂 Project Structure
-
-```text
-
 Stock-Sense/
+│
 ├── backend/
 │   └── src/
 │       ├── config/
@@ -66,36 +122,124 @@ Stock-Sense/
 │       ├── routes/
 │       ├── services/
 │       └── tests/
+│
 ├── frontend/
 │   └── src/
 │       ├── components/
 │       ├── pages/
 │       ├── services/
 │       └── assets/
+│
 ├── etl/
+│
 ├── docker-compose.yml
 ├── requirements.txt
+├── stock-display.py
+├── stock-display-backup.py
 └── README.md
 ```
 
 ---
 
-## 🚀 Installation & Setup
+## 📈 Data Pipeline
+
+Historical stock data is collected and processed through the Python ETL workflow.
+
+```text
+YFinance
+    ↓
+Historical Stock Data
+    ↓
+Pandas Processing
+    ↓
+Data Validation
+    ↓
+PostgreSQL
+    ↓
+Express API
+    ↓
+React Frontend
+```
+
+The pipeline works with historical market data such as:
+
+* Open price
+* High price
+* Low price
+* Close price
+* Volume
+
+---
+
+## 🔐 Authentication
+
+The application uses JWT authentication for protected requests.
+
+```text
+Register / Login
+       ↓
+Credentials Checked
+       ↓
+JWT Token
+       ↓
+Protected API Request
+       ↓
+Backend Verification
+```
+
+Passwords are hashed using bcrypt before being stored.
+
+---
+
+## ⭐ Watchlist
+
+Logged-in users can manage their own stock watchlist.
+
+They can:
+
+* Add a stock
+* View saved stocks
+* Remove a stock
+
+Watchlist information is stored in PostgreSQL.
+
+---
+
+## 📡 Main API Endpoints
+
+| Method | Endpoint                      | Purpose               |
+| ------ | ----------------------------- | --------------------- |
+| GET    | `/api/health`                 | Check backend status  |
+| POST   | `/api/auth/register`          | Register a user       |
+| POST   | `/api/auth/login`             | Log in a user         |
+| GET    | `/api/stocks`                 | Get stock information |
+| GET    | `/api/stocks/:symbol/history` | Get historical prices |
+| GET    | `/api/watchlist`              | Get user's watchlist  |
+| POST   | `/api/watchlist`              | Add a stock           |
+| DELETE | `/api/watchlist/:symbol`      | Remove a stock        |
+
+---
+
+## 🚀 Getting Started
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/Jhanwi/Stock-Sense.git
 cd Stock-Sense
 ```
 
-### 2.Backend
+### 2. Start the backend
+
 ```bash
 cd backend
 npm install
+npm run dev
 ```
 
-#### Create a .env file:
-```bash
+Create a `.env` file inside the `backend` directory:
+
+```env
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=stock_sense
@@ -105,121 +249,129 @@ PORT=5000
 JWT_SECRET=your-secret-key
 ```
 
-#### Start the backend:
-```bash
-npm run dev
-```
+The backend runs on:
 
-#### Backend runs on:
-```bash
+```text
 http://localhost:5000
 ```
 
-### 3.Frontend
-#### Open another terminal:
+### 3. Start the frontend
+
+Open another terminal:
+
 ```bash
 cd frontend
 npm install
-```
-#### Create .env:
-```bash
-VITE_API_BASE=http://localhost:5000/api
-```
-#### Start the frontend:
-```bash
 npm run dev
 ```
 
-#### Open the URL shown by Vite, usually:
-```bash
-http://localhost:5173
+Create a `.env` file inside the `frontend` directory:
+
+```env
+VITE_API_BASE=http://localhost:5000/api
 ```
+
+Vite will display the local frontend URL in the terminal.
+
 ---
 
-## 🧪 Testing
+## 🧪 Running Tests
 
-#### Run backend tests with:
+To run the backend tests:
+
 ```bash
 cd backend
 npm test
 ```
+
+The project uses **Vitest** for backend testing.
+
 ---
 
 ## 🐳 Docker
 
-#### Run the project using Docker:
+The project includes Docker Compose configuration.
+
+Start the project with:
 
 ```bash
 docker compose up --build
 ```
 
-#### Stop the containers:
+Stop the containers with:
+
 ```bash
 docker compose down
 ```
----
-
-## 📡 Main API Endpoints
-```bash
-GET    /api/health
-POST   /api/auth/register
-POST   /api/auth/login
-GET    /api/stocks
-GET    /api/stocks/:symbol/history
-GET    /api/watchlist
-POST   /api/watchlist
-DELETE /api/watchlist/:symbol
-```
----
-
-## 🔄 Data Pipeline
-
-Stock data is processed through a Python ETL workflow:
-```text
-YFinance → Pandas → Validation/Transformation → PostgreSQL → REST API → React
-```
-
-## ☁️ Deployment
-```text
-Frontend → Vercel
-Backend  → Render
-Database → PostgreSQL
-```
-
-### For production, configure the frontend environment variable:
-```text
-VITE_API_BASE=https://YOUR-RENDER-BACKEND-URL/api
-```
-
-<i>NOTE:- Do not commit .env files or database credentials to GitHub.</i>
 
 ---
 
-## 🎯 Highlights
+## ⚙️ Environment Variables
 
-- Built a layered backend architecture using controllers, services, repositories, and middleware.
-- Developed RESTful APIs using Node.js, Express.js, and TypeScript.
-- Implemented JWT authentication and bcrypt password hashing.
-- Integrated PostgreSQL for users, stocks, historical prices, and watchlists.
-- Built a Python ETL pipeline using YFinance and Pandas.
-- Added automated backend testing with Vitest.
-- Deployed the application using Vercel and Render.
+The backend requires database and authentication configuration.
+
+Example:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=stock_sense
+DB_USER=stock_user
+DB_PASSWORD=stock_password
+PORT=5000
+JWT_SECRET=your-secret-key
+```
+
+The frontend uses:
+
+```env
+VITE_API_BASE=http://localhost:5000/api
+```
+
+Do not commit real passwords, API keys, or secret values to GitHub.
 
 ---
 
-## 🔮 Future Improvements
-- Interactive stock charts
-- Real-time market updates
-- Technical indicators
-- Price alerts
-- Portfolio tracking
-- More comprehensive automated testing
-- Scheduled cloud-based ETL jobs
+## 🧠 What I Learned
+
+Building Stock Sense helped me get practical experience with:
+
+* REST API development using Express and TypeScript
+* PostgreSQL and database queries
+* JWT authentication and password hashing
+* React frontend and API integration
+* Python and Pandas for data processing
+* YFinance and historical stock data
+* Building an ETL workflow
+* Backend testing with Vitest
+* Docker
+* Vercel and Render deployment
+* Debugging frontend and backend issues
+
+---
+
+## 🔨 Future Improvements
+
+* [ ] Add interactive stock charts
+* [ ] Add real-time market updates
+* [ ] Add technical indicators
+* [ ] Add price alerts
+* [ ] Add portfolio tracking
+* [ ] Improve API error handling
+* [ ] Add more automated tests
+* [ ] Schedule the ETL process
+
+---
+## 📌 Project Status
+
+🟢 **Active portfolio project**
+
+I built Stock Sense to get hands-on experience with **backend development, TypeScript, Express, PostgreSQL, REST APIs, React, and data processing.**
 
 ---
 
 ## 👩‍💻 Author
-**[Jhanwi Kumari](https://github.com/Jhanwi)**
 
-<i>Computer Science Engineer | Backend/Full-Stack Developer</i>
+**Jhanwi Kumari**
 
+[GitHub](https://github.com/Jhanwi)
